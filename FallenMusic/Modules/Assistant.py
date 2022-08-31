@@ -38,44 +38,44 @@ async def awaiting_message(_, message):
     else:
         flood[str(user_id)] = 1
     if flood[str(user_id)] > 4:
-        await message.reply_text("**» sᴩᴀᴍ ᴅᴇᴛᴇᴄᴛᴇᴅ. ʙʟᴏᴄᴋɪɴɢ ᴛʜɪs ᴜsᴇʀ.**")
+        await message.reply_text("**» Bu Kullanıcıyı Engelleyen Spam Algılandı.**")
         await Ass.send_message(
             config.LOGGER_ID,
-            f"**sᴩᴀᴍ ᴅᴇᴛᴇᴄᴛᴇᴅ**\n\n» **sᴩᴀᴍᴍᴇʀ :** {message.from_user.mention}\n» **ᴜsᴇʀ ɪᴅ:** {message.from_user.id}",
+            f"**Spam Algılandı**\n\n» **Spam Gönderen :** {message.from_user.mention}\n» **ᴜsᴇʀ ɪᴅ:** {message.from_user.id}",
         )
         return await Ass.block_user(user_id)
 
 
 @Ass.on_message(
-    filters.command("approve", prefixes=config.ASS_HANDLER)
+    filters.command("add", prefixes=config.ASS_HANDLER)
     & filters.user(SUDO_USERS)
     & ~filters.via_bot
 )
 async def pm_approve(_, message):
     if not message.reply_to_message:
         return await eor(
-            message, text="» ʀᴇᴩʟʏ ᴛᴏ ᴀ ᴜsᴇʀ's ᴍᴇssᴀɢᴇ ᴛᴏ ᴀᴩᴩʀᴏᴠᴇ."
+            message, text="» onaylamak için kullanıcının mesajını yanıtla."
         )
     user_id = message.reply_to_message.from_user.id
     if await is_pmpermit_approved(user_id):
-        return await eor(message, text="» ᴀʟʀᴇᴀᴅʏ ᴀᴩᴩʀᴏᴠᴇᴅ ᴛᴏ ᴩᴍ.")
+        return await eor(message, text="» Onay Verildi Bile.")
     await approve_pmpermit(user_id)
-    await eor(message, text="» ᴀᴩᴩʀᴏᴠᴇᴅ ᴛᴏ ᴩᴍ.")
+    await eor(message, text="» onaylandı")
 
 
 @Ass.on_message(
-    filters.command("disapprove", prefixes=config.ASS_HANDLER)
+    filters.command("al", prefixes=config.ASS_HANDLER)
     & filters.user(SUDO_USERS)
     & ~filters.via_bot
 )
 async def pm_disapprove(_, message):
     if not message.reply_to_message:
         return await eor(
-            message, text="» ʀᴇᴩʟʏ ᴛᴏ ᴀ ᴜsᴇʀ's ᴍᴇssᴀɢᴇ ᴛᴏ ᴅɪsᴀᴩᴩʀᴏᴠᴇ."
+            message, text="» Yetkilerini Almak için kullanıcının mesajını yanıtla."
         )
     user_id = message.reply_to_message.from_user.id
     if not await is_pmpermit_approved(user_id):
-        await eor(message, text="» ᴀʟʀᴇᴀᴅʏ ᴅɪsᴀᴩᴩʀᴏᴠᴇᴅ ᴛᴏ ᴩᴍ.")
+        await eor(message, text="» Alındı Bile")
         async for m in Ass.iter_history(user_id, limit=5):
             if m.reply_markup:
                 try:
@@ -84,7 +84,7 @@ async def pm_disapprove(_, message):
                     pass
         return
     await disapprove_pmpermit(user_id)
-    await eor(message, text="» ᴅɪsᴀᴩᴩʀᴏᴠᴇᴅ ᴛᴏ ᴩᴍ.")
+    await eor(message, text="» Yetkiler Alındı.")
 
     
 @Ass.on_message(
@@ -94,11 +94,11 @@ async def pm_disapprove(_, message):
 )
 async def set_pfp(_, message):
     if not message.reply_to_message or not message.reply_to_message.photo:
-        return await eor(message, text="» ʀᴇᴩʟʏ ᴛᴏ ᴀ ᴩʜᴏᴛᴏ ᴛᴏ sᴇᴛ ɪᴛ ᴀs ᴀssɪsᴛᴀɴᴛ ᴩғᴩ.")
+        return await eor(message, text="» pfp yardımcısı olarak ayarlamak için bir fotoğrafa yanıt verin.")
     photo = await message.reply_to_message.download()
     try: 
         await Ass.set_profile_photo(photo=photo)   
-        await eor(message, text="**» sᴜᴄᴄᴇssғᴜʟʟʏ ᴄʜᴀɴɢᴇᴅ ᴩғᴩ ᴏғ ᴀssɪsᴛᴀɴᴛ.**")
+        await eor(message, text="**» asistanın pfp'sini başarıyla değiştirdi.**")
     except Exception as e:
         await eor(message, text=e)
     
@@ -110,16 +110,16 @@ async def set_pfp(_, message):
 )
 async def set_bio(_, message):
     if len(message.command) == 1:
-        return await eor(message , text="» ɢɪᴠᴇ sᴏᴍᴇ ᴛᴇxᴛ ᴛᴏ sᴇᴛ ɪᴛ ᴀs ᴀssɪsᴛᴀɴᴛ ʙɪᴏ.")
+        return await eor(message , text="» Asistan Hakkında Kısmı İçin Lütfen biraz Metin Ver.")
     elif len(message.command) > 1:
         bio = message.text.split(None, 1)[1]
         try: 
             await Ass.update_profile(bio=bio) 
-            await eor(message , text="**» sᴜᴄᴄᴇssғᴜʟʟʏ ᴄʜᴀɴɢᴇᴅ ʙɪᴏ ᴏғ ᴀssɪsᴛᴀɴᴛ.**")
+            await eor(message , text="**» Asistan Hakkında Kısmı Düzenlendı.**")
         except Exception as e:
             await eor(message , text=e) 
     else:
-        return await eor(message , text="» ɢɪᴠᴇ sᴏᴍᴇ ᴛᴇxᴛ ᴛᴏ sᴇᴛ ɪᴛ ᴀs ᴀssɪsᴛᴀɴᴛ ʙɪᴏ.")
+        return await eor(message , text="» Asistan Hakkında Kısmı İçin Lütfen biraz Metin Ver.")
 
 
 async def eor(msg: Message, **kwargs):
