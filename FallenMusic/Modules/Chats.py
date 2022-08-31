@@ -7,7 +7,7 @@ from FallenMusic.Helpers.Database import get_served_chats
 @app.on_message(filters.command(["chats", "chatlist", "groups"]) & filters.user(OWNER_ID))
 async def list_chats(_, message: Message):
     served_chats = []
-    text = "🤯 **ʟɪsᴛ ᴏғ ᴄʜᴀᴛs ɪɴ ᴡʜɪᴄʜ ʙᴏᴛ ɪs ᴩʀᴇsᴇɴᴛ :**\n\n"
+    text = "🤯 **botun bulunduğu sohbetlerin listesi :**\n\n"
     try:
         chats = await get_served_chats()
         for chat in chats:
@@ -20,11 +20,11 @@ async def list_chats(_, message: Message):
         try:
             title = (await app.get_chat(served_chat)).title
         except Exception:
-            title = "• ᴩʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ"
+            title = "• Özel Grup"
         count += 1
         text += f"**• {count}. {title}** [`{served_chat}`]\n"
     if not text:
-        await message.reply_text("**» ɴᴏ ᴄʜᴀᴛs ғᴏᴜɴᴅ ɪɴ ʙᴏᴛ's ᴅᴀᴛᴀʙᴀsᴇ.**")  
+        await message.reply_text("**» Veri Tabanında Grup Bulunamadı.**")  
     else:
         await message.reply_text(text) 
 
