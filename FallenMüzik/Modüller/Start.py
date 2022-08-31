@@ -60,7 +60,7 @@ async def gstart(_, message: Message):
         [
             [
                 InlineKeyboardButton(
-                    text="ᴀᴅᴅ ᴍᴇ ᴇʟsᴇ ʏᴏᴜ ɢᴇʏ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
+                    text="Beni Bir Gruba Ekle", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
                 ),
             ],
             [
@@ -73,17 +73,13 @@ async def gstart(_, message: Message):
             ],
             [
                 InlineKeyboardButton(
-                    text="✨ sᴜᴩᴩᴏʀᴛ ✨", url=config.SUPPORT_CHAT
+                    text="✨ Oyun Grubu ✨", url=config.SUPPORT_CHAT
                 ),
                 InlineKeyboardButton(
-                    text="💘 ᴄʜᴀɴɴᴇʟ 💘", url=config.SUPPORT_CHANNEL
+                    text="💘 Resmi Kanal💘", url=config.SUPPORT_CHANNEL
                 ),
             ],
-            [
-                InlineKeyboardButton(
-                    text="☁ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ☁", url="https://github.com/AnonymousR1025/FallenMusic"
-                ),
-            ],
+            
         ]
      ),
   )
