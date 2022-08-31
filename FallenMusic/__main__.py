@@ -196,7 +196,7 @@ async def start_command(_, message):
         [
             [
                 InlineKeyboardButton(
-                    text="ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴩ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
+                    text="Beni Gruba Ekle", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
                 ),
             ],
             [
