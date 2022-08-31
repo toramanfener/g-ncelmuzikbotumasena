@@ -18,7 +18,7 @@ async def auth(_, message: Message):
     if not message.reply_to_message:
         if len(message.command) != 2:
             await message.reply_text(
-                "**» ʀᴇᴩʟʏ ᴛᴏ ᴀ ᴜsᴇʀ's ᴍᴇssᴀɢᴇ ᴏʀ ɢɪᴠᴇ ᴜsᴇʀɴᴀᴍᴇ/ᴜsᴇʀ ɪᴅ.**"
+                "**» bir kullanıcının mesajını yanıtlama veya kullanıcı adı / kullanıcı kimliği ver.**"
             )
             return
         user = message.text.split(None, 1)[1]
@@ -35,7 +35,7 @@ async def auth(_, message: Message):
             count += 1
         if int(count) == 15:
             return await message.reply_text(
-                "**» ʏᴏᴜ ᴄᴀɴ ᴏɴʟʏ ᴀᴅᴅ 15 ᴜsᴇʀs ɪɴ ᴀ ɢʀᴏᴜᴩ's ᴀᴜᴛʜ ʟɪsᴛ.**"
+                "**» Sadece 15 Kullanıcı Ekliyebilirsiniz.**"
             )
         if token not in _check:
             assis = {
@@ -46,11 +46,11 @@ async def auth(_, message: Message):
             }
             await save_authuser(message.chat.id, token, assis)
             await message.reply_text(
-                f"**» sᴜᴄᴄᴇssғᴜʟʟʏ ᴀᴅᴅᴇᴅ {user.first_name} ᴛᴏ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ʟɪsᴛ ᴏғ ᴛʜᴇ ɢʀᴏᴜᴩ.**"
+                f"**» Başarıyla.Eklendi {user.first_name} grubun yetkili kullanıcı listesine.**"
             )
             return
         else:
-            await message.reply_text(f"**» {user.first_name} ɪs ᴀʟʀᴇᴀᴅʏ ɪɴ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ʟɪsᴛ.**")
+            await message.reply_text(f"**» {user.first_name} zaten yetkili kullanıcılar listesinde.**")
         return
     from_user_id = message.from_user.id
     user_id = message.reply_to_message.from_user.id
@@ -63,7 +63,7 @@ async def auth(_, message: Message):
         count += 1
     if int(count) == 15:
         return await message.reply_text(
-            "**» ʏᴏᴜ ᴄᴀɴ ᴏɴʟʏ ᴀᴅᴅ 15 ᴜsᴇʀs ɪɴ ᴀ ɢʀᴏᴜᴩ's ᴀᴜᴛʜ ʟɪsᴛ.**"
+            "**» Sadece 15 Kullanıcı Ekliyebilirsiniz.**"
         )
     if token not in _check:
         assis = {
@@ -74,11 +74,11 @@ async def auth(_, message: Message):
         }
         await save_authuser(message.chat.id, token, assis)
         await message.reply_text(
-            f"**» sᴜᴄᴄᴇssғᴜʟʟʏ ᴀᴅᴅᴇᴅ {user_name} ᴛᴏ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ʟɪsᴛ ᴏғ ᴛʜᴇ ɢʀᴏᴜᴩ.**"
+            f"**» Başarıyla Eklendi {user_name} Grubun yetkili kullanıcılar listesine.**"
         )
         return
     else:
-        await message.reply_text(f"**» {user_name} ɪs ᴀʟʀᴇᴀᴅʏ ɪɴ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ʟɪsᴛ.**")
+        await message.reply_text(f"**» {user_name} Zaten Grubun Yetkili Kullanicılar Listesinde.**")
 
 
 @app.on_message(filters.command("unauth") & filters.group)
@@ -87,7 +87,7 @@ async def unauth_fe(_, message: Message):
     if not message.reply_to_message:
         if len(message.command) != 2:
             await message.reply_text(
-                "**» ʀᴇᴩʟʏ ᴛᴏ ᴀ ᴜsᴇʀ's ᴍᴇssᴀɢᴇ ᴏʀ ɢɪᴠᴇ ᴜsᴇʀɴᴀᴍᴇ/ᴜsᴇʀ ɪᴅ.**"
+                "**» bir kullanıcının mesajını yanıtlama veya kullanıcı adı / kullanıcı kimliği ver.**"
             )
             return
         user = message.text.split(None, 1)[1]
@@ -98,19 +98,19 @@ async def unauth_fe(_, message: Message):
         deleted = await delete_authuser(message.chat.id, token)
         if deleted:
             return await message.reply_text(
-                f"**» ʀᴇᴍᴏᴠᴇᴅ {user.first_name} ғʀᴏᴍ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ʟɪsᴛ ᴏғ ᴛʜᴇ ɢʀᴏᴜᴩ.**"
+                f"**» Silindi {user.first_name} Geubun Yetkili Kullanıcılar Listesinden**"
             )
         else:
-            return await message.reply_text("**» ɴᴏᴛ ɪɴ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ʟɪsᴛ.**")
+            return await message.reply_text("**» Yetkili Kullanıcılar Listesinde Yok.**")
     user_id = message.reply_to_message.from_user.id
     token = await int_to_alpha(user_id)
     deleted = await delete_authuser(message.chat.id, token)
     if deleted:
         return await message.reply_text(
-            f"**» ʀᴇᴍᴏᴠᴇᴅ {message.reply_to_message.from_user.first_name} ғʀᴏᴍ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ʟɪsᴛ ᴏғ ᴛʜᴇ ɢʀᴏᴜᴩ.**"
+            f"**» Silindi {message.reply_to_message.from_user.first_name} Yetkili Kullanıcılar Listesinden.**"
         )
     else:
-        return await message.reply_text("**» ɴᴏᴛ ɪɴ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ʟɪsᴛ.**")
+        return await message.reply_text("**» Yetkili Kullanıcilar Listesinde Ylk.**")
 
 
 @app.on_message(filters.command("authusers") & filters.group)
@@ -118,14 +118,14 @@ async def authusers(_, message: Message):
     _playlist = await get_authuser_names(message.chat.id)
     if not _playlist:
         return await message.reply_text(
-            "**» ɴᴏ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ғᴏᴜɴᴅ ɪɴ ʏʜɪs ɢʀᴏᴜᴩ.**"
+            "**» bu grupta yetkili kullanıcı bulunamadı.**"
         )
     else:
         j = 0
         m = await message.reply_text(
-            "**» ɢᴇᴛᴛɪɴɢ ᴀᴜᴛʜᴏʀɪsᴇᴅ ᴜsᴇʀs ʟɪsᴛ ғʀᴏᴍ ᴍᴏɴɢᴏᴅʙ...**"
+            "**» Veri Tabanından yetkili kullanıcı listesi alma...**"
         )
-        msg = "**🥀 ᴀᴜᴛʜᴏʀɪᴢᴇᴅ ᴜsᴇʀs ʟɪsᴛ :**\n\n"
+        msg = "**🥀 Yetkili Kullanıcılar Listesi :**\n\n"
         for note in _playlist:
             _note = await get_authuser(message.chat.id, note)
             user_id = _note["auth_user_id"]
@@ -139,5 +139,5 @@ async def authusers(_, message: Message):
             except Exception:
                 continue
             msg += f"{j}➤ {user}[`{user_id}`]\n"
-            msg += f"    ┗ ᴀᴅᴅᴇᴅ ʙʏ : {admin_name}[`{admin_id}`]\n\n"
+            msg += f"    ┗ Ekleyen : {admin_name}[`{admin_id}`]\n\n"
         await m.edit_text(msg)

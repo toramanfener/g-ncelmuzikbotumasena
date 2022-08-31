@@ -35,33 +35,33 @@ async def admin_risghts(_, CallbackQuery):
     command = CallbackQuery.matches[0].group(1)
     if not await is_active_chat(CallbackQuery.message.chat.id):
         return await CallbackQuery.answer(
-            "» ᴅɪᴅ ʏᴏᴜ ʀᴇᴍᴇᴍʙᴇʀ ᴛʜᴀᴛ ʏᴏᴜ'ᴠᴇ ᴩʟᴀʏᴇᴅ sᴏᴍᴇᴛʜɪɴɢ ?", show_alert=True
+            "» Bir şeyin Oynatıldığı Konusunda Eminmisin ?", show_alert=True
         )
     chat_id = CallbackQuery.message.chat.id
     if command == "pausecb":
         if not await is_music_playing(chat_id):
             return await CallbackQuery.answer(
-                "» sᴛʀᴇᴀᴍ ᴀʟʀᴇᴀᴅʏ ᴩᴀᴜsᴇᴅ.", show_alert=True
+                "» Yayın Zaaten Durduruldu.", show_alert=True
             )
         await music_off(chat_id)
         await Fallen.pytgcalls.pause_stream(chat_id)
         await CallbackQuery.message.reply_text(
-            f"➻ **sᴛʀᴇᴀᴍ ᴩᴀᴜsᴇᴅ** ☁️\n│ \n└ʙʏ : {CallbackQuery.from_user.first_name} 🥀",
+            f"➻ **Yayın Durduruldu** ☁️\n│ \n└ʙʏ : {CallbackQuery.from_user.first_name} 🥀",
             reply_markup=audio_markup,
         )
-        await CallbackQuery.answer("» sᴛʀᴇᴀᴍ ᴩᴀᴜsᴇᴅ.")
+        await CallbackQuery.answer("» Yayın Durduruldu.")
     if command == "resumecb":
         if await is_music_playing(chat_id):
             return await CallbackQuery.answer(
-                "» ᴅɪᴅ ʏᴏᴜ ʀᴇᴍᴇᴍʙᴇʀ ᴛʜᴀᴛ ʏᴏᴜ'ᴠᴇ ᴩᴀᴜsᴇᴅ ᴛʜᴇ sᴛʀᴇᴀᴍ ?", show_alert=True
+                "» Bir şeyin Oynatıldığı Konusunda Eminmisin  ?", show_alert=True
             )
         await music_on(chat_id)
         await Fallen.pytgcalls.resume_stream(chat_id)
         await CallbackQuery.message.reply_text(
-            f"➻ **sᴛʀᴇᴀᴍ ʀᴇsᴜᴍᴇᴅ** ✨\n│ \n└ʙʏ : {CallbackQuery.from_user.first_name} 🥀",
+            f"➻ **Yayın Devam Ediyke** ✨\n│ \n└ʙʏ : {CallbackQuery.from_user.first_name} 🥀",
             reply_markup=audio_markup,
         )
-        await CallbackQuery.answer("» sᴛʀᴇᴀᴍ ʀᴇsᴜᴍᴇᴅ.")
+        await CallbackQuery.answer("» Yayın Devam Ediyor.")
     if command == "stopcb":
         try:
             Queues.clear(chat_id)
@@ -70,23 +70,23 @@ async def admin_risghts(_, CallbackQuery):
         await remove_active_chat(chat_id)
         await Fallen.pytgcalls.leave_group_call(chat_id)
         await CallbackQuery.message.reply_text(
-            f"➻ **sᴛʀᴇᴀᴍ ᴇɴᴅᴇᴅ/sᴛᴏᴩᴩᴇᴅ** ❄\n│ \n└ʙʏ : {CallbackQuery.from_user.first_name} 🥀",
+            f"➻ **Yayın Sonlandırıldı** ❄\n│ \n└ʙʏ : {CallbackQuery.from_user.first_name} 🥀",
             reply_markup=close_key,
         )
         await CallbackQuery.message.delete()
-        await CallbackQuery.answer("» sᴛʀᴇᴀᴍ ᴇɴᴅᴇᴅ.")
+        await CallbackQuery.answer("» Yayın Sonlandırıldı.")
     if command == "skipcb":
         Queues.task_done(chat_id)
         if Queues.is_empty(chat_id):
             await remove_active_chat(chat_id)
             await CallbackQuery.message.reply_text(
-                f"➻ **sᴛʀᴇᴀᴍ sᴋɪᴩᴩᴇᴅ** 🥺\n│ \n└ʙʏ : {CallbackQuery.from_user.first_name} 🥀\n\n» ɴᴏ ᴍᴏʀᴇ ǫᴜᴇᴜᴇᴅ ᴛʀᴀᴄᴋs ɪɴ {CallbackQuery.message.chat.title}, **ʟᴇᴀᴠɪɴɢ ᴠɪᴅᴇᴏᴄʜᴀᴛ.**",
+                f"➻ **Yayın Anladı** 🥺\n│ \n└ʙʏ : {CallbackQuery.from_user.first_name} 🥀\n\n» Artık Sıraya Alınmıs Bir Parça Yok {CallbackQuery.message.chat.title}, **Sesli Sohbetten Ayrılıyor**",
               reply_markup=close_key,
             )
             await Fallen.pytgcalls.leave_group_call(chat_id)
             await CallbackQuery.message.delete()
             await CallbackQuery.answer(
-                "» sᴋɪᴩᴩᴇᴅ, ɴᴏ ᴍᴏʀᴇ ᴛʀᴀᴄᴋ ɪɴ ǫᴜᴇᴜᴇ."
+                "» kuyrukta daha fazla parça yok."
             )
             return
         else:
@@ -99,10 +99,10 @@ async def admin_risghts(_, CallbackQuery):
             if str(finxx) != "raw":
                 await CallbackQuery.message.delete()
                 await CallbackQuery.answer(
-                    "sᴛʀᴇᴀᴍ sᴋɪᴩᴩᴇᴅ..."
+                    "Yayın Geçildi..."
                 )
                 mystic = await CallbackQuery.message.reply_text(
-                    f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ɴᴇxᴛ ᴛʀᴀᴄᴋ ғʀᴏᴍ ᴩʟᴀʏʟɪsᴛ...\n\nsᴛʀᴇᴀᴍ sᴋɪᴩᴩᴇᴅ ʙʏ  {CallbackQuery.from_user.mention} !**🥀"
+                    f"**bir sonraki parçayı çalma listesinden indirme...\n\nYayın Geçildi ʙʏ  {CallbackQuery.from_user.mention} !**🥀"
                 )
                 (
                     title,
@@ -111,7 +111,7 @@ async def admin_risghts(_, CallbackQuery):
                     thumbnail,
                 ) = get_yt_info_id(videoid)
                 await mystic.edit(
-                    f"**{BOT_NAME} ᴅᴏᴡɴʟᴏᴀᴅᴇʀ**\n\n**ᴛɪᴛʟᴇ :** {title[:40]}\n\n0% ■■■■■■■■■■■■ 100%"
+                    f"**{BOT_NAME} İndiren**\n\n**Başlık :** {title[:40]}\n\n0% ■■■■■■■■■■■■ 100%"
                 )
                 downloaded_file = await loop.run_in_executor(
                     None, download, videoid, mystic, title
@@ -137,14 +137,14 @@ async def admin_risghts(_, CallbackQuery):
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),
                     caption=(
-                        f"<b>➻ sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ</b>\n\n<b>✨ ᴛɪᴛʟᴇ :</b> [{title[:40]}](https://www.youtube.com/watch?v={videoid})\n☁ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {duration_min} ᴍɪɴᴜᴛᴇs\n🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {mention}"
+                        f"<b>➻ Yayın Başladı</b>\n\n<b>✨ ᴛɪᴛʟᴇ :</b> [{title[:40]}](https://www.youtube.com/watch?v={videoid})\n☁ <b>Süre :</b> {duration_min} Dakika\n🥀 <b>Talep Eden :</b> {mention}"
                     ),
                 )
                 os.remove(thumb)
 
             else:
                 await CallbackQuery.message.delete()
-                await CallbackQuery.answer("sᴛʀᴇᴀᴍ sᴋɪᴩᴩᴇᴅ...")
+                await CallbackQuery.answer("Yayın Atladı...")
                 await Fallen.pytgcalls.change_stream(
                     chat_id,
                     InputStream(
@@ -181,7 +181,7 @@ async def admin_risghts(_, CallbackQuery):
                 final_output = await CallbackQuery.message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),
-                    caption=f"<b>➻ sᴛᴀʀᴛᴇᴅ sᴛʀᴇᴀᴍɪɴɢ</b>\n\n<b>✨ ᴛɪᴛʟᴇ :</b> {title[:40]}\n☁ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {duration_min} ᴍɪɴᴜᴛᴇs\n🥀 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {mention}",
+                    caption=f"<b>➻ Yayın Başladı</b>\n\n<b>✨ Başlık :</b> {title[:40]}\n☁ <b>Süre :</b> {duration_min} Dakika\n🥀 <b>Talep Eden :</b> {mention}",
                 )
 
 
